@@ -1,26 +1,44 @@
 package com.github.zipcodewilmington.casino;
 
-/**
- * Created by leon on 7/21/2020.
- */
-public interface GameInterface extends Runnable {
-    /**
-     * adds a player to the game
-     * @param player the player to be removed from the game
-     */
-    void add(CasinoPlayerInterface player);
+import com.github.zipcodewilmington.casino.games.roulette.RouletteGamePlayer;
+
+public interface GameInterface {
 
     /**
-     * removes a player from the game
-     * @param player the player to be removed from the game
+     * Starts the game.
+     * @return true if the game started successfully, false otherwise
      */
-    void remove(CasinoPlayerInterface player);
+    boolean startGame();
 
     /**
-     * specifies how the game will run
+     * Ends the game.
+     * @return true if the game ended successfully, false otherwise
      */
-    void run();
+    boolean endGame();
 
-    //seeBalance()
+    /**
+     * Resets the game to its initial state.
+     * @return true if the game was successfully reset, false otherwise
+     */
+    boolean reset();
+
+    /**
+     * Determines if the player has won the game.
+     * @return true if the player has won, false otherwise
+     */
+    boolean playerWin();
+
+    /**
+     * Determines if the player has lost the game.
+     * @return true if the player has lost, false otherwise
+     */
+    boolean playerLose();
+
+    /**
+     * Allows players to take turns in the game.
+     * @param player The player taking their turn
+     */
+
 
 }
+

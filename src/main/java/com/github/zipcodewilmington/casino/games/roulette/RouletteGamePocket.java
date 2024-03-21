@@ -1,4 +1,4 @@
-package com.github.zipcodewilmington;
+package com.github.zipcodewilmington.casino.games.roulette;
 
 public class RouletteGamePocket {
     private int number;
