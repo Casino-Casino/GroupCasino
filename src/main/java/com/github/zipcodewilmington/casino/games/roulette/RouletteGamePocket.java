@@ -15,5 +15,5 @@ public class RouletteGamePocket {
 
     public String getColor() {
         return color;
-    }
+    }//
 }
