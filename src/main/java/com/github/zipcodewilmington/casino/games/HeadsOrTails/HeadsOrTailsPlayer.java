@@ -11,6 +11,28 @@ public class HeadsOrTailsPlayer implements GamblingPlayerInterface {
     }
 
 
+    @Override
+    public String placeBet(double amount) {
+        return null;
+    }
 
+    @Override
+    public double playerBalance() {
+        return 0;
+    }
 
+    @Override
+    public double addToBalance(double amount) {
+        return 0;
+    }
+
+    @Override
+    public String sufficientFunds(double amount) {
+        return null;
+    }
+
+    @Override
+    public String playerSelection() {
+        return null;
+    }
 }
