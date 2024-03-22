@@ -1,8 +1,12 @@
-package com.github.zipcodewilmington.casino.games.HeadsOrTails;
+package com.github.zipcodewilmington.casino.games.coinflip;
 
 import java.util.Random;
 
-public class HeadsOrTailsRNG {
+public class RNGCoin {
+
+    public static void main(String[] args) {
+
+    }
     private int rngRange;
 
     public int coinRNG() {
