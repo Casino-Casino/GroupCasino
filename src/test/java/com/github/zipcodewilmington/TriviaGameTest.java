@@ -1,91 +1,30 @@
 package com.github.zipcodewilmington;
 
+import com.github.zipcodewilmington.casino.games.Trivia.TriviaGame;
+import static org.junit.Assert.*;
+
+import com.github.zipcodewilmington.casino.games.Trivia.TriviaGamePlayer;
 import org.junit.Test;
 
 public class TriviaGameTest {
-    @Test
-    public void startGame(){
-
-    }
-    @Test
-    public void endGame(){
-
-    }
-    @Test
-    public void reset(){
-
-    }
-    @Test
-    public void playerWin(){
-
-    }
-    @Test
-    public void playerLose(){
-
-    }
-    @Test
-    public void takeTurns(){
-
-    }
-    @Test
-    public void joinGame(){
-
-    }
-    @Test
-    public void leaveGame(){
-
-    }
-    @Test
-    public void play(){
-
-    }
-    @Test
-    public void getName(){
-
-    }
-    @Test
-    public void setName(){
-
-    }
-    @Test
-    public void getScore(){
-
-    }
-    @Test
-    public void playAgain(){
-    }
 
     @Test
-    public void askQuestion(){
+    public void testInitialReport(){
+        String expected = "WELCOME TO TRIVIA, YOU'LL BE ASKED A TOTAL OF 10 QUESTIONS BASED ON DIFFERENT CATEGORIES." +
+                " READY? LET'S START!";
+        TriviaGame tg = new TriviaGame();
 
-    }
-    @Test
-    public void scoreAnswer(){
+        String actual = tg.initialReport();
 
+        assertEquals(expected, actual);
     }
-    @Test
-    public void getCorrectAnswer(){
 
-    }
-    @Test
-    public void getText(){
-
-    }
-    @Test
-    public void incrementScore(){
-
-    }
-    @Test
-    public void initialReport(){
-
-    }
     @Test
     public void finalReport(){
-
-    }
-    @Test
-    public void wordBank(){
-
+        String expected = "Congratulations! Thanks for playing Trivia!";
+        TriviaGame tg = new TriviaGame();
+        String actual = tg.finalReport();
+        assertEquals(expected, actual);
     }
 
 }
