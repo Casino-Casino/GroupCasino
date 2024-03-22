@@ -47,12 +47,12 @@ public class RouletteGame implements GameInterface {
 
     @Override
     public boolean playerWin() {
-        return false; // Not implemented yet
+        return false;
     }
 
     @Override
     public boolean playerLose() {
-        return false; // Not implemented yet
+        return false;
     }
 
     public void startGame(List<CasinoAccount> casinoAccountList) {

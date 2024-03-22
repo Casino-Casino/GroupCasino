@@ -155,7 +155,12 @@ public class Casino implements Runnable {
         while (true) {
             System.out.println("Choose a game to play:");
             System.out.println("1. Roulette");
-            // Add options for other games here
+
+
+
+            // Add options for other games here *******************************************
+
+
 
             int gameChoice = scanner.nextInt();
             scanner.nextLine();
@@ -165,7 +170,13 @@ public class Casino implements Runnable {
                     RouletteGame rouletteGame = new RouletteGame();
                     rouletteGame.startGame(casinoAccountList);
                     break;
-                // Add cases for other games here
+
+
+                // Add cases for other games here *******************************************
+
+
+
+
                 default:
                     System.out.println("Invalid choice. Please enter a valid option.");
             }
