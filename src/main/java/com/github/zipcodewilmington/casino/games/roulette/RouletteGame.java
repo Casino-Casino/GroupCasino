@@ -1,12 +1,13 @@
 package com.github.zipcodewilmington.casino.games.roulette;
 
 import com.github.zipcodewilmington.casino.CasinoAccount;
-import com.github.zipcodewilmington.casino.GameInterface;
+import com.github.zipcodewilmington.casino.CasinoAccountManager;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class RouletteGame implements GameInterface {
-
+public class RouletteGame {
     private final RouletteGameWheel wheel;
     private final List<RouletteGamePlayer> players;
 
@@ -19,70 +20,49 @@ public class RouletteGame implements GameInterface {
         players.add(player);
     }
 
-    public void removePlayer(RouletteGamePlayer player) {
-        players.remove(player);
-    }
-
-    @Override
-    public boolean startGame() {
-        List<CasinoAccount> casinoAccountList = new ArrayList<>();
-        for (RouletteGamePlayer player : players) {
-            casinoAccountList.add(new CasinoAccount(player.getFirstName(), "",
-                    player.getFirstName(), "", null, player.getBalance()));
-        }
-        startGame(casinoAccountList);
-        return true;
-    }
-
-    @Override
-    public boolean endGame() {
-        return players.isEmpty();
-    }
-
-    @Override
-    public boolean reset() {
-        players.clear();
-        return true;
-    }
-
-    @Override
-    public boolean playerWin() {
-        return false;
-    }
-
-    @Override
-    public boolean playerLose() {
-        return false;
-    }
-
     public void startGame(List<CasinoAccount> casinoAccountList) {
         for (CasinoAccount account : casinoAccountList) {
             RouletteGamePlayer newPlayer = new RouletteGamePlayer(account.getFirstName(), account.getBalance());
             addPlayer(newPlayer);
         }
 
-        while (!endGame()) {
-            int totalBet = 0;
+        Iterator<RouletteGamePlayer> iterator = players.iterator();
+        while (iterator.hasNext()) {
+            RouletteGamePlayer player = iterator.next();
+            double initialBalance = player.getBalance(); // Store initial balance
+
+            // Place bet and play game
+            double totalBet = 0;
             int betValue = -1;
             String betType = "";
-            for (RouletteGamePlayer player : players) {
-                double betAmount = player.placeBet();
-                String choice = player.chooseBetType();
-                if (choice.equals("number")) {
-                    betValue = player.chooseNumber();
-                } else if (choice.equals("color")) {
-                    betType = player.chooseColor();
-                }
-                totalBet += betAmount;
+            double betAmount = player.placeBet();
+            String choice = player.chooseBetType();
+            if (choice.equals("number")) {
+                betValue = player.chooseNumber();
+            } else if (choice.equals("color")) {
+                betType = player.chooseColor();
             }
+            totalBet += betAmount;
 
             RouletteGamePocket result = wheel.spin();
             System.out.println("Result: " + result.getNumber() + " " + result.getColor());
 
-            for (RouletteGamePlayer player : players) {
-                boolean win = player.checkBet(result, betType, totalBet, betValue);
-                player.collectWinnings(totalBet, win);
+            boolean win = player.checkBet(result, betType, totalBet, betValue);
+            player.collectWinnings(totalBet, win);
+
+            // Update player's balance based on game outcome
+            double balanceChange = player.getBalanceChange();
+            player.addToBalance(balanceChange); // Add balance change to player's balance
+
+            // Remove player if balance is zero or negative
+            if (player.getBalance() <= 0) {
+                System.out.println(player.getFirstName() + ", you are out of money. Removing from the game.");
+                iterator.remove(); // Safely remove the player from the list
+                // Deduct initial balance from the CasinoAccount balance
+                CasinoAccountManager.getInstance().findAccount(player.getUserName()).withdraw(initialBalance);
             }
         }
     }
+
+
 }

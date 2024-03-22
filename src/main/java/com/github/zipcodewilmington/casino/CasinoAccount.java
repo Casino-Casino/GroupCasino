@@ -58,4 +58,13 @@ public class CasinoAccount {
     public void depositFunds(double amount) {
         balance += amount;
     }
+
+    public void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdrawn " + amount + " from account " + accountId);
+        } else {
+            System.out.println("Insufficient balance.");
+        }
+    }
 }
