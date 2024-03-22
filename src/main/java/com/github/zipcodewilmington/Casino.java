@@ -126,6 +126,8 @@ public class Casino implements Runnable {
 
         CasinoAccount account = new CasinoAccount(username, password, firstname, lastname, birthdate, initialBalance);
         this.accountManager.registerAccount(account);
+
+        casinoAccountList.add(account);
     }
 
     public boolean login(String userName, String password) {
@@ -152,7 +154,8 @@ public class Casino implements Runnable {
     }
 
     public void playGames() {
-        while (true) {
+        boolean continuePlaying = true;
+        while (continuePlaying) {
             System.out.println("Choose a game to play:");
             System.out.println("1. Roulette");
 
@@ -186,6 +189,7 @@ public class Casino implements Runnable {
             String playAgain = scanner.nextLine().toLowerCase();
             if (!playAgain.equals("yes")) {
                 System.out.println("Returning to main menu...");
+                continuePlaying = false;
                 return;
             }
         }

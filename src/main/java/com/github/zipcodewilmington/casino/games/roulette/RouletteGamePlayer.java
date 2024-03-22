@@ -9,15 +9,24 @@ import java.util.Scanner;
 public class RouletteGamePlayer extends CasinoAccount implements CasinoPlayerInterface, GamblingPlayerInterface {
 
     private final Scanner scanner;
+    private double balanceChange; // Track changes to the balance during the game
 
     public RouletteGamePlayer(String name, double balance) {
         super("", "", name, "", null, balance);
         this.scanner = new Scanner(System.in);
+        this.balanceChange = 0;
     }
 
     public double placeBet() {
         System.out.println(getFirstName() + ", enter your bet amount:");
-        return scanner.nextDouble();
+        double betAmount = scanner.nextDouble();
+        // Ensure player has sufficient funds
+        while (betAmount > getBalance()) {
+            System.out.println("Insufficient funds. Enter a smaller bet amount:");
+            betAmount = scanner.nextDouble();
+        }
+        balanceChange -= betAmount; // Deduct bet amount from balance
+        return betAmount;
     }
 
     public String chooseBetType() {
@@ -46,20 +55,23 @@ public class RouletteGamePlayer extends CasinoAccount implements CasinoPlayerInt
     public void collectWinnings(double totalBet, boolean win) {
         if (win) {
             double winnings = totalBet * 12; // Payout 12 times the bet for number
-            if (getBalance() >= winnings) {
-                depositFunds(winnings);
-                System.out.println(getFirstName() + ", you win " + winnings + "!");
-            } else {
-                System.out.println(getFirstName() + ", you don't have enough balance to cover the winnings.");
-            }
+            balanceChange += winnings; // Add winnings to balance change
+            System.out.println(getFirstName() + ", you win " + winnings + "!");
         } else {
+            balanceChange -= totalBet; // Deduct total bet from balance change
             System.out.println(getFirstName() + ", you lost " + totalBet + ".");
-            withdrawFunds(totalBet);
         }
     }
 
-    private void withdrawFunds(double totalBet) {
-        depositFunds(-totalBet);
+    @Override
+    public double addToBalance(double amount) {
+        setBalance(getBalance() + amount);
+        return getBalance();
+    }
+
+
+    public double getBalanceChange() {
+        return balanceChange;
     }
 
     @Override
@@ -107,10 +119,6 @@ public class RouletteGamePlayer extends CasinoAccount implements CasinoPlayerInt
         return 0;
     }
 
-    @Override
-    public double addToBalance(double amount) {
-        return 0;
-    }
 
     @Override
     public String sufficientFunds(double amount) {

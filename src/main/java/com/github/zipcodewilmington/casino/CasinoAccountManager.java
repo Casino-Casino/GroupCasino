@@ -5,6 +5,7 @@ import java.util.List;
 
 public class CasinoAccountManager {
     private List<CasinoAccount> accounts;
+    private static CasinoAccountManager instance;
 
     public CasinoAccountManager() {
         this.accounts = new ArrayList<>();
@@ -31,5 +32,12 @@ public class CasinoAccountManager {
             }
         }
         return null;
+    }
+
+    public static CasinoAccountManager getInstance() {
+        if (instance == null) {
+            instance = new CasinoAccountManager();
+        }
+        return instance;
     }
 }
