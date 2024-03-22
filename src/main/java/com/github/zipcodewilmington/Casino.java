@@ -2,6 +2,7 @@ package com.github.zipcodewilmington;
 
 import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
+import com.github.zipcodewilmington.casino.games.Hi_Lo.HiLoCardGame;
 import com.github.zipcodewilmington.casino.games.roulette.RouletteGame;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
@@ -155,6 +156,7 @@ public class Casino implements Runnable {
         while (true) {
             System.out.println("Choose a game to play:");
             System.out.println("1. Roulette");
+            System.out.println("2. HiLo");
             // Add options for other games here
 
             int gameChoice = scanner.nextInt();
@@ -164,6 +166,11 @@ public class Casino implements Runnable {
                     System.out.println("Welcome to Roulette!");
                     RouletteGame rouletteGame = new RouletteGame();
                     rouletteGame.startGame(casinoAccountList);
+                    break;
+                case 2:
+                    System.out.println("Welcome to HiLo!");
+                    HiLoCardGame hiLo = new HiLoCardGame(this);
+                    hiLo.startGame(casinoAccountList);
                     break;
                 // Add cases for other games here
                 default:
